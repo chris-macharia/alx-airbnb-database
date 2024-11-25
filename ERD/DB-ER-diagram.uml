@@ -1,0 +1,74 @@
+@startuml
+entity User {
+    * user_id : UUID [PK]
+    --
+    first_name : VARCHAR
+    last_name : VARCHAR
+    email : VARCHAR [UQ]
+    password_hash : VARCHAR
+    phone_number : VARCHAR
+    role : ENUM
+    created_at : TIMESTAMP
+}
+
+entity Property {
+    * property_id : UUID [PK]
+    --
+    host_id : UUID [FK]
+    name : VARCHAR
+    description : TEXT
+    location : VARCHAR
+    pricepernight : DECIMAL
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+entity Booking {
+    * booking_id : UUID [PK]
+    --
+    property_id : UUID [FK]
+    user_id : UUID [FK]
+    start_date : DATE
+    end_date : DATE
+    total_price : DECIMAL
+    status : ENUM
+    created_at : TIMESTAMP
+}
+
+entity Payment {
+    * payment_id : UUID [PK]
+    --
+    booking_id : UUID [FK]
+    amount : DECIMAL
+    payment_date : TIMESTAMP
+    payment_method : ENUM
+}
+
+entity Review {
+    * review_id : UUID [PK]
+    --
+    property_id : UUID [FK]
+    user_id : UUID [FK]
+    rating : INTEGER
+    comment : TEXT
+    created_at : TIMESTAMP
+}
+
+entity Message {
+    * message_id : UUID [PK]
+    --
+    sender_id : UUID [FK]
+    recipient_id : UUID [FK]
+    message_body : TEXT
+    sent_at : TIMESTAMP
+}
+
+' Relationships
+User ||--o{ Property : "hosts"
+User ||--o{ Booking : "makes"
+User ||--o{ Review : "writes"
+User ||--o{ Message : "sends"
+Property ||--o{ Booking : "is booked in"
+Property ||--o{ Review : "receives"
+Booking ||--o{ Payment : "is paid for"
+@enduml
