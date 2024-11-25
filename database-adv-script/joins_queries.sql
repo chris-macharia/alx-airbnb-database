@@ -18,7 +18,8 @@ INNER JOIN
 
 -- 2. LEFT JOIN - Retrieve All Properties and Their Reviews, Including Properties Without Reviews
 -- This query retrieves all properties and their respective reviews.
--- It uses a LEFT JOIN to ensure that properties with no reviews are also included in the result, with NULL values for the review fields.
+-- It uses a LEFT JOIN to ensure that properties with no reviews are also included in the result.
+-- Properties with no reviews will have NULL values for the review fields in the output.
 
 SELECT 
     p.property_id,
